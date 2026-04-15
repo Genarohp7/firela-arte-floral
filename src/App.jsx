@@ -1,11 +1,78 @@
 import firelaLogo from './assets/images/firela-logo.webp'
 import heroFirela from './assets/images/hero-firela.webp'
+import aboutFirela from './assets/images/about-firela.webp'
+import servicesFirela from './assets/images/services-firela.webp'
+import galleryCoverFirela from './assets/images/gallery-cover-firela.webp'
+import galleryItem01 from './assets/images/gallery-item-01.webp'
+import galleryItem02 from './assets/images/gallery-item-02.webp'
+import galleryItem03 from './assets/images/gallery-item-03.webp'
+import galleryItem04 from './assets/images/gallery-item-04.webp'
+import galleryItem05 from './assets/images/gallery-item-05.webp'
+import galleryItem06 from './assets/images/gallery-item-06.webp'
 import siteData from './data/site'
 
 function App() {
-  const whatsappHref = `https://wa.me/525548746673?text=${encodeURIComponent(
-    siteData.contact.whatsappMessage,
-  )}`
+  const createWhatsAppHref = (message) =>
+    `https://wa.me/525548746673?text=${encodeURIComponent(message)}`
+
+  const whatsappHref = createWhatsAppHref(siteData.contact.whatsappMessage)
+
+  const galleryItems = [
+    {
+      id: 'gallery-01',
+      title: 'Diseño floral 01',
+      description:
+        'Una propuesta floral con presencia elegante para regalo o un momento especial.',
+      image: galleryItem01,
+      message:
+        'Hola, vi el Diseño floral 01 en la galería de FIRELA y me gustaría saber su precio y disponibilidad.',
+    },
+    {
+      id: 'gallery-02',
+      title: 'Diseño floral 02',
+      description:
+        'Composición con una imagen más delicada y una presentación cuidada.',
+      image: galleryItem02,
+      message:
+        'Hola, vi el Diseño floral 02 en la galería de FIRELA y me gustaría saber su precio y disponibilidad.',
+    },
+    {
+      id: 'gallery-03',
+      title: 'Diseño floral 03',
+      description:
+        'Arreglo con intención estética para sorprender con un detalle especial.',
+      image: galleryItem03,
+      message:
+        'Hola, vi el Diseño floral 03 en la galería de FIRELA y me gustaría saber su precio y disponibilidad.',
+    },
+    {
+      id: 'gallery-04',
+      title: 'Diseño floral 04',
+      description:
+        'Una pieza floral con mejor presencia visual para una ocasión importante.',
+      image: galleryItem04,
+      message:
+        'Hola, vi el Diseño floral 04 en la galería de FIRELA y me gustaría saber su precio y disponibilidad.',
+    },
+    {
+      id: 'gallery-05',
+      title: 'Diseño floral 05',
+      description:
+        'Detalle floral pensado para regalar con elegancia y sensibilidad.',
+      image: galleryItem05,
+      message:
+        'Hola, vi el Diseño floral 05 en la galería de FIRELA y me gustaría saber su precio y disponibilidad.',
+    },
+    {
+      id: 'gallery-06',
+      title: 'Diseño floral 06',
+      description:
+        'Propuesta floral con un estilo cuidado y una presentación fina.',
+      image: galleryItem06,
+      message:
+        'Hola, vi el Diseño floral 06 en la galería de FIRELA y me gustaría saber su precio y disponibilidad.',
+    },
+  ]
 
   return (
     <div className="min-h-screen bg-firela-white text-firela-black">
@@ -137,31 +204,48 @@ function App() {
 
         <section id="quienes-somos" className="border-t border-black/8">
           <div className="mx-auto max-w-7xl px-6 py-16 sm:px-10 lg:px-16 lg:py-24">
-            <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
-              <div className="space-y-5">
-                <p className="text-sm uppercase tracking-[0.28em] text-firela-blue-deep">
-                  {siteData.about.title}
-                </p>
-                <h2 className="text-3xl leading-tight font-semibold sm:text-4xl">
-                  Una marca floral construida con profesionalismo, detalle y
-                  sensibilidad.
-                </h2>
-                <p className="max-w-2xl text-base leading-8 text-black/72">
-                  {siteData.about.description}
-                </p>
+            <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+              <div className="relative">
+                <div className="absolute -left-6 top-8 h-24 w-24 rounded-full bg-firela-blue-soft/70 blur-3xl" />
+                <div className="absolute -bottom-6 right-2 h-28 w-28 rounded-full bg-firela-rose-soft/70 blur-3xl" />
+
+                <div className="relative overflow-hidden rounded-[2rem] border border-black/8 bg-white p-4 shadow-[0_20px_70px_rgba(0,0,0,0.06)]">
+                  <div className="overflow-hidden rounded-[1.6rem]">
+                    <img
+                      src={aboutFirela}
+                      alt="Detalle floral elaborado por FIRELA"
+                      className="aspect-[4/5] w-full object-cover object-center"
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div className="grid gap-4">
-                {siteData.about.highlights.map((item, index) => (
-                  <div
-                    key={item}
-                    className={`rounded-[1.5rem] border border-black/8 p-5 shadow-[0_12px_40px_rgba(0,0,0,0.04)] ${
-                      index % 2 === 0 ? 'bg-white' : 'bg-firela-rose-soft/35'
-                    }`}
-                  >
-                    <p className="text-sm leading-7 text-black/72">{item}</p>
-                  </div>
-                ))}
+              <div className="space-y-6">
+                <div className="space-y-5">
+                  <p className="text-sm uppercase tracking-[0.28em] text-firela-blue-deep">
+                    {siteData.about.title}
+                  </p>
+                  <h2 className="text-3xl leading-tight font-semibold sm:text-4xl">
+                    Una marca floral construida con profesionalismo, detalle y
+                    sensibilidad.
+                  </h2>
+                  <p className="max-w-2xl text-base leading-8 text-black/72">
+                    {siteData.about.description}
+                  </p>
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {siteData.about.highlights.map((item, index) => (
+                    <div
+                      key={item}
+                      className={`rounded-[1.5rem] border border-black/8 p-5 shadow-[0_12px_40px_rgba(0,0,0,0.04)] ${
+                        index % 2 === 0 ? 'bg-white' : 'bg-firela-rose-soft/35'
+                      }`}
+                    >
+                      <p className="text-sm leading-7 text-black/72">{item}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -172,29 +256,61 @@ function App() {
           className="border-t border-black/8 bg-firela-blue-soft/35"
         >
           <div className="mx-auto max-w-7xl px-6 py-16 sm:px-10 lg:px-16 lg:py-24">
-            <div className="max-w-2xl space-y-5">
-              <p className="text-sm uppercase tracking-[0.28em] text-firela-blue-deep">
-                {siteData.services.title}
-              </p>
-              <h2 className="text-3xl leading-tight font-semibold sm:text-4xl">
-                Propuestas florales pensadas para transmitir algo importante.
-              </h2>
-            </div>
-
-            <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-              {siteData.services.items.map((item, index) => (
-                <article
-                  key={item.title}
-                  className={`rounded-[1.75rem] border border-black/8 p-6 shadow-[0_12px_40px_rgba(0,0,0,0.04)] ${
-                    index === 1 ? 'bg-firela-rose-soft/45' : 'bg-white'
-                  }`}
-                >
-                  <h3 className="text-xl font-medium">{item.title}</h3>
-                  <p className="mt-4 text-sm leading-7 text-black/70">
-                    {item.description}
+            <div className="grid gap-10 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
+              <div className="space-y-8">
+                <div className="max-w-2xl space-y-5">
+                  <p className="text-sm uppercase tracking-[0.28em] text-firela-blue-deep">
+                    {siteData.services.title}
                   </p>
-                </article>
-              ))}
+                  <h2 className="text-3xl leading-tight font-semibold sm:text-4xl">
+                    Propuestas florales pensadas para transmitir algo
+                    importante.
+                  </h2>
+                  <p className="text-base leading-8 text-black/72">
+                    Diseñamos arreglos y composiciones florales con una
+                    presentación cuidada, buscando que cada propuesta tenga
+                    personalidad, intención y una estética a la altura del
+                    momento.
+                  </p>
+                </div>
+
+                <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+                  {siteData.services.items.map((item, index) => (
+                    <article
+                      key={item.title}
+                      className={`rounded-[1.75rem] border border-black/8 p-6 shadow-[0_12px_40px_rgba(0,0,0,0.04)] ${
+                        index === 1 ? 'bg-firela-rose-soft/45' : 'bg-white'
+                      }`}
+                    >
+                      <h3 className="text-xl font-medium">{item.title}</h3>
+                      <p className="mt-4 text-sm leading-7 text-black/70">
+                        {item.description}
+                      </p>
+                    </article>
+                  ))}
+                </div>
+              </div>
+
+              <div className="relative">
+                <div className="absolute -right-4 top-8 h-24 w-24 rounded-full bg-firela-rose-soft/70 blur-3xl" />
+                <div className="absolute -left-4 bottom-0 h-28 w-28 rounded-full bg-firela-blue-soft/75 blur-3xl" />
+
+                <div className="relative overflow-hidden rounded-[2rem] border border-black/8 bg-white p-4 shadow-[0_20px_70px_rgba(0,0,0,0.06)]">
+                  <div className="relative overflow-hidden rounded-[1.6rem]">
+                    <div className="absolute left-5 top-5 z-10 rounded-full border border-white/60 bg-white/82 px-4 py-2 text-[11px] uppercase tracking-[0.24em] text-black/65 backdrop-blur">
+                      Lo que hacemos
+                    </div>
+
+                    <img
+                      src={servicesFirela}
+                      alt="Propuesta floral elaborada por FIRELA"
+                      className="aspect-[4/5] w-full object-cover object-center"
+                    />
+
+                    <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/15 via-black/0 to-transparent" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -235,60 +351,84 @@ function App() {
 
         <section id="galeria" className="border-t border-black/8 bg-white">
           <div className="mx-auto max-w-7xl px-6 py-16 sm:px-10 lg:px-16 lg:py-24">
-            <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-              <div className="max-w-2xl space-y-5">
-                <p className="text-sm uppercase tracking-[0.28em] text-firela-blue-deep">
-                  Galería
-                </p>
-                <h2 className="text-3xl leading-tight font-semibold sm:text-4xl">
-                  Un catálogo visual con mejor presencia, sin carruseles
-                  chafas ni caos visual.
-                </h2>
-                <p className="text-base leading-8 text-black/72">
-                  Aquí después montaremos una galería premium con fotos reales
-                  de arreglos, pensada para que cada pieza se vea elegante y
-                  pueda llevar a una consulta directa por WhatsApp.
-                </p>
+            <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+              <div className="space-y-6">
+                <div className="space-y-5">
+                  <p className="text-sm uppercase tracking-[0.28em] text-firela-blue-deep">
+                    Galería
+                  </p>
+                  <h2 className="text-3xl leading-tight font-semibold sm:text-4xl">
+                    Un catálogo visual con mejor presencia y contacto directo.
+                  </h2>
+                  <p className="text-base leading-8 text-black/72">
+                    Aquí la idea no es solo mostrar fotos bonitas. Queremos que
+                    cada diseño pueda convertirse en conversación, cotización y
+                    venta desde el primer clic.
+                  </p>
+                </div>
+
+                <a
+                  href={whatsappHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center rounded-full border border-black/12 bg-white px-6 py-3 text-sm font-medium text-firela-black transition hover:bg-firela-rose-soft"
+                >
+                  Pedir información general
+                </a>
               </div>
 
-              <a
-                href={whatsappHref}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center justify-center rounded-full border border-black/12 bg-white px-6 py-3 text-sm font-medium text-firela-black transition hover:bg-firela-rose-soft"
-              >
-                Pedir información
-              </a>
+              <div className="relative">
+                <div className="absolute -top-4 -left-4 h-24 w-24 rounded-full bg-firela-blue-soft/75 blur-3xl" />
+                <div className="absolute -right-3 bottom-0 h-28 w-28 rounded-full bg-firela-rose-soft/75 blur-3xl" />
+
+                <div className="relative overflow-hidden rounded-[2rem] border border-black/8 bg-white p-4 shadow-[0_20px_70px_rgba(0,0,0,0.06)]">
+                  <div className="relative overflow-hidden rounded-[1.6rem]">
+                    <div className="absolute left-5 top-5 z-10 rounded-full border border-white/60 bg-white/82 px-4 py-2 text-[11px] uppercase tracking-[0.24em] text-black/65 backdrop-blur">
+                      Catálogo FIRELA
+                    </div>
+
+                    <img
+                      src={galleryCoverFirela}
+                      alt="Portada de galería floral de FIRELA"
+                      className="aspect-[4/5] w-full object-cover object-center"
+                    />
+
+                    <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/15 via-black/0 to-transparent" />
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-              {Array.from({ length: 6 }).map((_, index) => (
-                <div
-                  key={index}
+            <div className="mt-12 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+              {galleryItems.map((item) => (
+                <article
+                  key={item.id}
                   className="group overflow-hidden rounded-[1.75rem] border border-black/8 bg-white shadow-[0_12px_40px_rgba(0,0,0,0.04)]"
                 >
-                  <div
-                    className={`aspect-[4/5] ${
-                      index % 3 === 1
-                        ? 'bg-[linear-gradient(180deg,rgba(219,204,213,0.65),rgba(204,215,219,0.2))]'
-                        : 'bg-[linear-gradient(180deg,rgba(204,215,219,0.55),rgba(169,187,194,0.2))]'
-                    }`}
-                  />
+                  <div className="overflow-hidden">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="aspect-[4/5] w-full object-cover object-center transition duration-500 group-hover:scale-[1.03]"
+                    />
+                  </div>
+
                   <div className="space-y-3 p-5">
-                    <p className="text-lg font-medium">Arreglo floral</p>
+                    <h3 className="text-xl font-medium">{item.title}</h3>
                     <p className="text-sm leading-7 text-black/70">
-                      Espacio temporal para fotografía real del catálogo.
+                      {item.description}
                     </p>
+
                     <a
-                      href={whatsappHref}
+                      href={createWhatsAppHref(item.message)}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center text-sm font-medium underline underline-offset-4"
+                      className="inline-flex items-center rounded-full bg-firela-black px-4 py-2 text-sm font-medium text-firela-white transition hover:opacity-90"
                     >
                       Me interesa este diseño
                     </a>
                   </div>
-                </div>
+                </article>
               ))}
             </div>
           </div>
