@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import firelaLogo from './assets/images/firela-logo.webp'
 import heroFirela from './assets/images/hero-firela.webp'
 import aboutFirela from './assets/images/about-firela.webp'
@@ -12,10 +13,15 @@ import galleryItem06 from './assets/images/gallery-item-06.webp'
 import siteData from './data/site'
 
 function App() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
   const createWhatsAppHref = (message) =>
     `https://wa.me/525548746673?text=${encodeURIComponent(message)}`
 
   const whatsappHref = createWhatsAppHref(siteData.contact.whatsappMessage)
+
+  const closeMobileMenu = () => setIsMobileMenuOpen(false)
+  const toggleMobileMenu = () => setIsMobileMenuOpen((current) => !current)
 
   const galleryItems = [
     {
@@ -77,8 +83,8 @@ function App() {
   return (
     <div className="min-h-screen bg-firela-white text-firela-black">
       <header className="sticky top-0 z-50 border-b border-black/10 bg-white/85 backdrop-blur-md">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-4 sm:px-10 lg:px-16">
-          <a href="#" className="flex items-center gap-3">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4 sm:px-10 lg:px-16">
+          <a href="#" className="flex items-center gap-3" onClick={closeMobileMenu}>
             <img
               src={firelaLogo}
               alt={siteData.brand.fullName}
@@ -98,14 +104,79 @@ function App() {
             ))}
           </nav>
 
-          <a
-            href={whatsappHref}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center justify-center rounded-full bg-firela-black px-5 py-2.5 text-sm font-medium text-firela-white transition hover:opacity-90"
+          <div className="hidden lg:block">
+            <a
+              href={whatsappHref}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center rounded-full bg-firela-black px-5 py-2.5 text-sm font-medium text-firela-white transition hover:opacity-90"
+            >
+              WhatsApp
+            </a>
+          </div>
+
+          <button
+            type="button"
+            aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
+            onClick={toggleMobileMenu}
+            className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-black/10 bg-white text-firela-black shadow-sm transition hover:bg-firela-rose-soft lg:hidden"
           >
-            WhatsApp
-          </a>
+            <span className="relative h-4 w-5">
+              <span
+                className={`absolute left-0 top-0 h-0.5 w-5 rounded-full bg-current transition ${
+                  isMobileMenuOpen ? 'translate-y-[7px] rotate-45' : ''
+                }`}
+              />
+              <span
+                className={`absolute left-0 top-[7px] h-0.5 w-5 rounded-full bg-current transition ${
+                  isMobileMenuOpen ? 'opacity-0' : 'opacity-100'
+                }`}
+              />
+              <span
+                className={`absolute left-0 top-[14px] h-0.5 w-5 rounded-full bg-current transition ${
+                  isMobileMenuOpen ? '-translate-y-[7px] -rotate-45' : ''
+                }`}
+              />
+            </span>
+          </button>
+        </div>
+
+        <div
+          id="mobile-menu"
+          className={`overflow-hidden border-t border-black/8 bg-white/95 backdrop-blur-md transition-all duration-300 lg:hidden ${
+            isMobileMenuOpen
+              ? 'max-h-[420px] opacity-100'
+              : 'max-h-0 opacity-0'
+          }`}
+        >
+          <div className="mx-auto max-w-7xl px-6 py-5 sm:px-10">
+            <nav className="flex flex-col gap-2">
+              {siteData.navigation.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={closeMobileMenu}
+                  className="rounded-2xl px-4 py-3 text-sm font-medium text-black/80 transition hover:bg-firela-blue-soft/35 hover:text-black"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </nav>
+
+            <div className="mt-4 border-t border-black/8 pt-4">
+              <a
+                href={whatsappHref}
+                target="_blank"
+                rel="noreferrer"
+                onClick={closeMobileMenu}
+                className="inline-flex w-full items-center justify-center rounded-full bg-firela-black px-6 py-3 text-sm font-medium text-firela-white transition hover:opacity-90"
+              >
+                Enviar mensaje por WhatsApp
+              </a>
+            </div>
+          </div>
         </div>
       </header>
 
