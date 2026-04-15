@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme {
+  --color-firela-black: #000000;
+  --color-firela-white: #ffffff;
+  --color-firela-blue-soft: #ccd7db;
+  --color-firela-blue-deep: #a9bbc2;
+  --color-firela-rose-soft: #dbccd5;
+
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "EB Garamond Variable", ui-serif, Georgia, serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--color-firela-white);
+  color: var(--color-firela-black);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: var(--color-firela-rose-soft);
+  color: var(--color-firela-black);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-serif);
+  letter-spacing: -0.02em;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+section {
+  scroll-margin-top: 96px;
+}
