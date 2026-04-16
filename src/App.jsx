@@ -334,14 +334,11 @@ function App() {
                     {siteData.services.title}
                   </p>
                   <h2 className="text-3xl leading-tight font-semibold sm:text-4xl">
-                    Propuestas florales pensadas para transmitir algo
-                    importante.
+                    Diseños florales pensados para verse especiales y sentirse
+                    memorables.
                   </h2>
                   <p className="text-base leading-8 text-black/72">
-                    Diseñamos arreglos y composiciones florales con una
-                    presentación cuidada, buscando que cada propuesta tenga
-                    personalidad, intención y una estética a la altura del
-                    momento.
+                    {siteData.services.intro}
                   </p>
                 </div>
 
@@ -386,55 +383,19 @@ function App() {
           </div>
         </section>
 
-        <section id="nuestros-clientes" className="border-t border-black/8">
-          <div className="mx-auto max-w-7xl px-6 py-16 sm:px-10 lg:px-16 lg:py-24">
-            <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
-              <div className="space-y-5">
-                <p className="text-sm uppercase tracking-[0.28em] text-firela-blue-deep">
-                  {siteData.clients.title}
-                </p>
-                <h2 className="text-3xl leading-tight font-semibold sm:text-4xl">
-                  Pensado para personas que quieren regalar, decorar o expresar
-                  algo con flores.
-                </h2>
-                <p className="text-base leading-8 text-black/72">
-                  {siteData.clients.description}
-                </p>
-              </div>
-
-              <div className="grid gap-4 sm:grid-cols-2">
-                {siteData.clients.items.map((item, index) => (
-                  <div
-                    key={item}
-                    className={`rounded-[1.5rem] border border-black/8 p-5 ${
-                      index === 0 || index === 3
-                        ? 'bg-firela-rose-soft/35'
-                        : 'bg-white'
-                    }`}
-                  >
-                    <p className="text-sm leading-7 text-black/72">{item}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
         <section id="galeria" className="border-t border-black/8 bg-white">
           <div className="mx-auto max-w-7xl px-6 py-16 sm:px-10 lg:px-16 lg:py-24">
             <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
               <div className="space-y-6">
                 <div className="space-y-5">
                   <p className="text-sm uppercase tracking-[0.28em] text-firela-blue-deep">
-                    Galería
+                    {siteData.gallery.title}
                   </p>
                   <h2 className="text-3xl leading-tight font-semibold sm:text-4xl">
-                    Un catálogo visual con mejor presencia y contacto directo.
+                    {siteData.gallery.heading}
                   </h2>
                   <p className="text-base leading-8 text-black/72">
-                    Aquí la idea no es solo mostrar fotos bonitas. Queremos que
-                    cada diseño pueda convertirse en conversación, cotización y
-                    venta desde el primer clic.
+                    {siteData.gallery.description}
                   </p>
                 </div>
 
@@ -444,7 +405,7 @@ function App() {
                   rel="noreferrer"
                   className="inline-flex items-center justify-center rounded-full border border-black/12 bg-white px-6 py-3 text-sm font-medium text-firela-black transition hover:bg-firela-rose-soft"
                 >
-                  Pedir información general
+                  {siteData.gallery.buttonLabel}
                 </a>
               </div>
 
@@ -501,6 +462,47 @@ function App() {
                   </div>
                 </article>
               ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-t border-black/8 bg-firela-blue-soft/30">
+          <div className="mx-auto max-w-7xl px-6 py-16 sm:px-10 lg:px-16 lg:py-24">
+            <div className="relative overflow-hidden rounded-[2rem] border border-black/8 bg-white p-8 shadow-[0_20px_70px_rgba(0,0,0,0.05)] sm:p-10 lg:p-12">
+              <div className="absolute -top-10 -left-6 h-28 w-28 rounded-full bg-firela-blue-soft blur-3xl" />
+              <div className="absolute right-0 -bottom-10 h-32 w-32 rounded-full bg-firela-rose-soft/80 blur-3xl" />
+
+              <div className="relative grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+                <div className="space-y-5">
+                  <p className="text-sm uppercase tracking-[0.28em] text-firela-blue-deep">
+                    {siteData.finalCta.eyebrow}
+                  </p>
+                  <h2 className="max-w-3xl text-3xl leading-tight font-semibold sm:text-4xl">
+                    {siteData.finalCta.title}
+                  </h2>
+                  <p className="max-w-2xl text-base leading-8 text-black/72">
+                    {siteData.finalCta.description}
+                  </p>
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+                  <a
+                    href="#contacto"
+                    className="inline-flex items-center justify-center rounded-full border border-black/12 bg-white px-6 py-3 text-sm font-medium text-firela-black transition hover:bg-firela-rose-soft"
+                  >
+                    {siteData.finalCta.primaryLabel}
+                  </a>
+
+                  <a
+                    href={whatsappHref}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center justify-center rounded-full bg-firela-black px-6 py-3 text-sm font-medium text-firela-white transition hover:opacity-90"
+                  >
+                    {siteData.finalCta.secondaryLabel}
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </section>
