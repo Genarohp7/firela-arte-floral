@@ -609,38 +609,66 @@ function App() {
             className="rounded-[1.75rem] border border-black/8 bg-firela-rose-soft/45 p-6"
             {...revealUpSlow}
           >
-            <div className="space-y-4">
-              <a
-                href={whatsappHref}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex w-full items-center justify-center rounded-full bg-firela-black px-6 py-3 text-sm font-medium text-firela-white transition hover:opacity-90"
-              >
-                Enviar mensaje por WhatsApp
-              </a>
+         <div className="space-y-4">
+  <a
+    href={whatsappHref}
+    target="_blank"
+    rel="noreferrer"
+    className="inline-flex w-full items-center justify-center rounded-full bg-firela-black px-6 py-3 text-sm font-medium text-firela-white transition hover:opacity-90"
+  >
+    Enviar mensaje por WhatsApp
+  </a>
 
-              <a
-                href={siteData.socials.instagram}
-                target="_blank"
-                rel="noreferrer"
-                className="block text-sm text-black/75 transition hover:text-black"
-              >
-                Instagram
-              </a>
+  <div className="pt-1">
+    <p className="mb-3 text-xs uppercase tracking-[0.24em] text-black/45">
+      Redes sociales
+    </p>
 
-              <a
-                href={siteData.socials.facebook}
-                target="_blank"
-                rel="noreferrer"
-                className="block text-sm text-black/75 transition hover:text-black"
-              >
-                Facebook
-              </a>
+    <div className="flex items-center gap-3">
+      <a
+        href={siteData.socials.instagram}
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Instagram"
+        className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-black/10 bg-white text-firela-black transition hover:bg-firela-rose-soft"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          className="h-5 w-5"
+        >
+          <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
+          <circle cx="12" cy="12" r="4" />
+          <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none" />
+        </svg>
+      </a>
 
-              <p className="pt-3 text-sm text-black/65">
-                Teléfono: {siteData.contact.phoneDisplay}
-              </p>
-            </div>
+      <a
+        href={siteData.socials.facebook}
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Facebook"
+        className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-black/10 bg-white text-firela-black transition hover:bg-firela-blue-soft/45"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="h-5 w-5"
+        >
+          <path d="M13.5 21v-7.2h2.4l.36-2.8H13.5V9.2c0-.81.22-1.36 1.39-1.36H16.5V5.33C16.22 5.3 15.28 5.2 14.18 5.2c-2.3 0-3.88 1.4-3.88 4v1.8H7.7v2.8h2.6V21h3.2Z" />
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <p className="pt-3 text-sm text-black/65">
+    Teléfono: {siteData.contact.phoneDisplay}
+  </p>
+</div>
           </motion.div>
         </div>
       </footer>
