@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { motion, useScroll, useTransform } from 'motion/react'
 import Lightbox from 'yet-another-react-lightbox'
 import firelaLogo from './assets/images/firela-logo.webp'
@@ -25,15 +25,13 @@ const galleryImageMap = {
 
 const revealUp = {
   initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.2 },
+  animate: { opacity: 1, y: 0 },
   transition: { duration: 0.6, ease: 'easeOut' },
 }
 
 const revealUpSlow = {
   initial: { opacity: 0, y: 32 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.2 },
+  animate: { opacity: 1, y: 0 },
   transition: { duration: 0.75, ease: 'easeOut' },
 }
 
@@ -131,9 +129,7 @@ function App() {
         <div
           id="mobile-menu"
           className={`overflow-hidden border-t border-black/8 bg-white/95 backdrop-blur-md transition-all duration-300 lg:hidden ${
-            isMobileMenuOpen
-              ? 'max-h-105 opacity-100'
-              : 'max-h-0 opacity-0'
+            isMobileMenuOpen ? 'max-h-105 opacity-100' : 'max-h-0 opacity-0'
           }`}
         >
           <div className="mx-auto max-w-7xl px-6 py-5 sm:px-10">
@@ -324,8 +320,7 @@ function App() {
                         index % 2 === 0 ? 'bg-white' : 'bg-firela-rose-soft/35'
                       }`}
                       initial={{ opacity: 0, y: 18 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.2 }}
+                      animate={{ opacity: 1, y: 0 }}
                       transition={{
                         duration: 0.45,
                         delay: index * 0.06,
@@ -370,8 +365,7 @@ function App() {
                         index === 1 ? 'bg-firela-rose-soft/45' : 'bg-white'
                       }`}
                       initial={{ opacity: 0, y: 18 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.2 }}
+                      animate={{ opacity: 1, y: 0 }}
                       transition={{
                         duration: 0.45,
                         delay: index * 0.06,
@@ -482,8 +476,7 @@ function App() {
                   key={item.id}
                   className="group overflow-hidden rounded-[1.75rem] border border-black/8 bg-white shadow-[0_12px_40px_rgba(0,0,0,0.04)]"
                   initial={{ opacity: 0, y: 22 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.15 }}
+                  animate={{ opacity: 1, y: 0 }}
                   transition={{
                     duration: 0.45,
                     delay: index * 0.05,
