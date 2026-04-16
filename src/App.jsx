@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { motion, useScroll, useTransform } from 'motion/react'
 import Lightbox from 'yet-another-react-lightbox'
 import firelaLogo from './assets/images/firela-logo.webp'
 import heroFirela from './assets/images/hero-firela.webp'
@@ -22,9 +23,28 @@ const galleryImageMap = {
   'gallery-06': galleryItem06,
 }
 
+const revealUp = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.2 },
+  transition: { duration: 0.6, ease: 'easeOut' },
+}
+
+const revealUpSlow = {
+  initial: { opacity: 0, y: 32 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.2 },
+  transition: { duration: 0.75, ease: 'easeOut' },
+}
+
 function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState(-1)
+
+  const { scrollYProgress } = useScroll()
+  const heroCardY = useTransform(scrollYProgress, [0, 0.35], [0, -28])
+  const heroImageScale = useTransform(scrollYProgress, [0, 0.35], [1, 1.045])
+  const heroBlobY = useTransform(scrollYProgress, [0, 0.35], [0, 36])
 
   const createWhatsAppHref = (message) =>
     `https://wa.me/525548746673?text=${encodeURIComponent(message)}`
@@ -91,17 +111,17 @@ function App() {
             <span className="relative h-4 w-5">
               <span
                 className={`absolute left-0 top-0 h-0.5 w-5 rounded-full bg-current transition ${
-                  isMobileMenuOpen ? 'translate-y-[7px] rotate-45' : ''
+                  isMobileMenuOpen ? 'translate-y-1.75 rotate-45' : ''
                 }`}
               />
               <span
-                className={`absolute left-0 top-[7px] h-0.5 w-5 rounded-full bg-current transition ${
+                className={`absolute left-0 top-1.75 h-0.5 w-5 rounded-full bg-current transition ${
                   isMobileMenuOpen ? 'opacity-0' : 'opacity-100'
                 }`}
               />
               <span
-                className={`absolute left-0 top-[14px] h-0.5 w-5 rounded-full bg-current transition ${
-                  isMobileMenuOpen ? '-translate-y-[7px] -rotate-45' : ''
+                className={`absolute left-0 top-3.5 h-0.5 w-5 rounded-full bg-current transition ${
+                  isMobileMenuOpen ? '-translate-y-1.75 -rotate-45' : ''
                 }`}
               />
             </span>
@@ -112,7 +132,7 @@ function App() {
           id="mobile-menu"
           className={`overflow-hidden border-t border-black/8 bg-white/95 backdrop-blur-md transition-all duration-300 lg:hidden ${
             isMobileMenuOpen
-              ? 'max-h-[420px] opacity-100'
+              ? 'max-h-105 opacity-100'
               : 'max-h-0 opacity-0'
           }`}
         >
@@ -150,7 +170,7 @@ function App() {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(204,215,219,0.52),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(219,204,213,0.45),transparent_28%)]" />
 
           <div className="relative mx-auto grid min-h-[calc(100vh-73px)] max-w-7xl gap-12 px-6 py-16 sm:px-10 lg:grid-cols-2 lg:items-center lg:px-16 lg:py-24">
-            <div className="space-y-6">
+            <motion.div className="space-y-6" {...revealUpSlow}>
               <p className="text-sm uppercase tracking-[0.28em] text-firela-blue-deep">
                 {siteData.home.eyebrow}
               </p>
@@ -180,28 +200,40 @@ function App() {
                   {siteData.home.secondaryCta.label}
                 </a>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="relative">
-              <div className="absolute -top-10 -left-6 h-32 w-32 rounded-full bg-firela-blue-soft blur-3xl" />
-              <div className="absolute top-16 right-6 h-28 w-28 rounded-full bg-firela-rose-soft/80 blur-3xl" />
+            <motion.div className="relative" style={{ y: heroCardY }} {...revealUp}>
+              <motion.div
+                className="absolute -top-10 -left-6 h-32 w-32 rounded-full bg-firela-blue-soft blur-3xl"
+                style={{ y: heroBlobY }}
+              />
+              <motion.div
+                className="absolute top-16 right-6 h-28 w-28 rounded-full bg-firela-rose-soft/80 blur-3xl"
+                style={{ y: heroBlobY }}
+              />
               <div className="absolute right-0 -bottom-10 h-40 w-40 rounded-full bg-firela-blue-deep/50 blur-3xl" />
 
-              <div className="relative overflow-hidden rounded-[2rem] border border-black/10 bg-white p-4 shadow-[0_20px_80px_rgba(0,0,0,0.08)]">
+              <div className="relative overflow-hidden rounded-4xl border border-black/10 bg-white p-4 shadow-[0_20px_80px_rgba(0,0,0,0.08)]">
                 <div className="relative overflow-hidden rounded-[1.6rem]">
                   <div className="absolute left-5 top-5 z-10 rounded-full border border-white/60 bg-white/80 px-4 py-2 text-[11px] uppercase tracking-[0.24em] text-black/65 backdrop-blur">
                     Diseño floral
                   </div>
 
-                  <img
+                  <motion.img
                     src={heroFirela}
                     alt="Montaje floral de FIRELA"
-                    className="aspect-[4/5] w-full object-cover object-center"
+                    className="aspect-4/5 w-full object-cover object-center"
+                    style={{ scale: heroImageScale }}
                   />
 
-                  <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/18 via-black/0 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-black/18 via-black/0 to-transparent" />
 
-                  <div className="absolute bottom-5 right-5 max-w-[220px] rounded-[1.3rem] border border-white/55 bg-white/82 p-4 shadow-[0_10px_40px_rgba(0,0,0,0.08)] backdrop-blur">
+                  <motion.div
+                    className="absolute bottom-5 right-5 max-w-55 rounded-[1.3rem] border border-white/55 bg-white/82 p-4 shadow-[0_10px_40px_rgba(0,0,0,0.08)] backdrop-blur"
+                    initial={{ opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.25, duration: 0.55, ease: 'easeOut' }}
+                  >
                     <p className="text-[11px] uppercase tracking-[0.24em] text-black/45">
                       FIRELA
                     </p>
@@ -209,11 +241,16 @@ function App() {
                       Propuestas florales con presencia visual para momentos
                       especiales.
                     </p>
-                  </div>
+                  </motion.div>
                 </div>
 
                 <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                  <div className="rounded-[1.5rem] border border-black/8 bg-firela-rose-soft/45 p-5">
+                  <motion.div
+                    className="rounded-3xl border border-black/8 bg-firela-rose-soft/45 p-5"
+                    initial={{ opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.15, duration: 0.5, ease: 'easeOut' }}
+                  >
                     <p className="text-xs uppercase tracking-[0.24em] text-black/40">
                       Detalle
                     </p>
@@ -221,9 +258,14 @@ function App() {
                       Cada arreglo debe sentirse fino, cuidado y digno de ser
                       regalado.
                     </p>
-                  </div>
+                  </motion.div>
 
-                  <div className="rounded-[1.5rem] border border-black/8 bg-firela-blue-soft/50 p-5">
+                  <motion.div
+                    className="rounded-3xl border border-black/8 bg-firela-blue-soft/50 p-5"
+                    initial={{ opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.24, duration: 0.5, ease: 'easeOut' }}
+                  >
                     <p className="text-xs uppercase tracking-[0.24em] text-black/40">
                       Identidad
                     </p>
@@ -231,32 +273,36 @@ function App() {
                       Una marca floral con una imagen limpia, moderna y
                       profesional.
                     </p>
-                  </div>
+                  </motion.div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </section>
 
-        <section id="quienes-somos" className="border-t border-black/8">
+        <motion.section
+          id="quienes-somos"
+          className="border-t border-black/8"
+          {...revealUp}
+        >
           <div className="mx-auto max-w-7xl px-6 py-16 sm:px-10 lg:px-16 lg:py-24">
             <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-              <div className="relative">
+              <motion.div className="relative" {...revealUp}>
                 <div className="absolute -left-6 top-8 h-24 w-24 rounded-full bg-firela-blue-soft/70 blur-3xl" />
                 <div className="absolute -bottom-6 right-2 h-28 w-28 rounded-full bg-firela-rose-soft/70 blur-3xl" />
 
-                <div className="relative overflow-hidden rounded-[2rem] border border-black/8 bg-white p-4 shadow-[0_20px_70px_rgba(0,0,0,0.06)]">
+                <div className="relative overflow-hidden rounded-4xl border border-black/8 bg-white p-4 shadow-[0_20px_70px_rgba(0,0,0,0.06)]">
                   <div className="overflow-hidden rounded-[1.6rem]">
                     <img
                       src={aboutFirela}
                       alt="Detalle floral elaborado por FIRELA"
-                      className="aspect-[4/5] w-full object-cover object-center"
+                      className="aspect-4/5 w-full object-cover object-center"
                     />
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="space-y-6">
+              <motion.div className="space-y-6" {...revealUpSlow}>
                 <div className="space-y-5">
                   <p className="text-sm uppercase tracking-[0.28em] text-firela-blue-deep">
                     {siteData.about.title}
@@ -272,28 +318,37 @@ function App() {
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   {siteData.about.highlights.map((item, index) => (
-                    <div
+                    <motion.div
                       key={item}
-                      className={`rounded-[1.5rem] border border-black/8 p-5 shadow-[0_12px_40px_rgba(0,0,0,0.04)] ${
+                      className={`rounded-3xl border border-black/8 p-5 shadow-[0_12px_40px_rgba(0,0,0,0.04)] ${
                         index % 2 === 0 ? 'bg-white' : 'bg-firela-rose-soft/35'
                       }`}
+                      initial={{ opacity: 0, y: 18 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.2 }}
+                      transition={{
+                        duration: 0.45,
+                        delay: index * 0.06,
+                        ease: 'easeOut',
+                      }}
                     >
                       <p className="text-sm leading-7 text-black/72">{item}</p>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
-        </section>
+        </motion.section>
 
-        <section
+        <motion.section
           id="lo-que-hacemos"
           className="border-t border-black/8 bg-firela-blue-soft/35"
+          {...revealUp}
         >
           <div className="mx-auto max-w-7xl px-6 py-16 sm:px-10 lg:px-16 lg:py-24">
             <div className="grid gap-10 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
-              <div className="space-y-8">
+              <motion.div className="space-y-8" {...revealUpSlow}>
                 <div className="max-w-2xl space-y-5">
                   <p className="text-sm uppercase tracking-[0.28em] text-firela-blue-deep">
                     {siteData.services.title}
@@ -309,26 +364,35 @@ function App() {
 
                 <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
                   {siteData.services.items.map((item, index) => (
-                    <article
+                    <motion.article
                       key={item.title}
                       className={`rounded-[1.75rem] border border-black/8 p-6 shadow-[0_12px_40px_rgba(0,0,0,0.04)] ${
                         index === 1 ? 'bg-firela-rose-soft/45' : 'bg-white'
                       }`}
+                      initial={{ opacity: 0, y: 18 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.2 }}
+                      transition={{
+                        duration: 0.45,
+                        delay: index * 0.06,
+                        ease: 'easeOut',
+                      }}
+                      whileHover={{ y: -4 }}
                     >
                       <h3 className="text-xl font-medium">{item.title}</h3>
                       <p className="mt-4 text-sm leading-7 text-black/70">
                         {item.description}
                       </p>
-                    </article>
+                    </motion.article>
                   ))}
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="relative">
+              <motion.div className="relative" {...revealUp}>
                 <div className="absolute -right-4 top-8 h-24 w-24 rounded-full bg-firela-rose-soft/70 blur-3xl" />
                 <div className="absolute -left-4 bottom-0 h-28 w-28 rounded-full bg-firela-blue-soft/75 blur-3xl" />
 
-                <div className="relative overflow-hidden rounded-[2rem] border border-black/8 bg-white p-4 shadow-[0_20px_70px_rgba(0,0,0,0.06)]">
+                <div className="relative overflow-hidden rounded-4xl border border-black/8 bg-white p-4 shadow-[0_20px_70px_rgba(0,0,0,0.06)]">
                   <div className="relative overflow-hidden rounded-[1.6rem]">
                     <div className="absolute left-5 top-5 z-10 rounded-full border border-white/60 bg-white/82 px-4 py-2 text-[11px] uppercase tracking-[0.24em] text-black/65 backdrop-blur">
                       Lo que hacemos
@@ -337,21 +401,25 @@ function App() {
                     <img
                       src={servicesFirela}
                       alt="Propuesta floral elaborada por FIRELA"
-                      className="aspect-[4/5] w-full object-cover object-center"
+                      className="aspect-4/5 w-full object-cover object-center"
                     />
 
-                    <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/15 via-black/0 to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 h-28 bg-linear-to-t from-black/15 via-black/0 to-transparent" />
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
-        </section>
+        </motion.section>
 
-        <section id="galeria" className="border-t border-black/8 bg-white">
+        <motion.section
+          id="galeria"
+          className="border-t border-black/8 bg-white"
+          {...revealUp}
+        >
           <div className="mx-auto max-w-7xl px-6 py-16 sm:px-10 lg:px-16 lg:py-24">
             <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-              <div className="space-y-6">
+              <motion.div className="space-y-6" {...revealUpSlow}>
                 <div className="space-y-5">
                   <p className="text-sm uppercase tracking-[0.28em] text-firela-blue-deep">
                     {siteData.gallery.title}
@@ -372,13 +440,13 @@ function App() {
                 >
                   {siteData.gallery.buttonLabel}
                 </a>
-              </div>
+              </motion.div>
 
-              <div className="relative">
+              <motion.div className="relative" {...revealUp}>
                 <div className="absolute -top-4 -left-4 h-24 w-24 rounded-full bg-firela-blue-soft/75 blur-3xl" />
                 <div className="absolute -right-3 bottom-0 h-28 w-28 rounded-full bg-firela-rose-soft/75 blur-3xl" />
 
-                <div className="relative overflow-hidden rounded-[2rem] border border-black/8 bg-white p-4 shadow-[0_20px_70px_rgba(0,0,0,0.06)]">
+                <div className="relative overflow-hidden rounded-4xl border border-black/8 bg-white p-4 shadow-[0_20px_70px_rgba(0,0,0,0.06)]">
                   <div className="relative overflow-hidden rounded-[1.6rem]">
                     <div className="absolute left-5 top-5 z-10 rounded-full border border-white/60 bg-white/82 px-4 py-2 text-[11px] uppercase tracking-[0.24em] text-black/65 backdrop-blur">
                       Catálogo FIRELA
@@ -387,29 +455,41 @@ function App() {
                     <img
                       src={galleryCoverFirela}
                       alt="Portada de galería floral de FIRELA"
-                      className="aspect-[4/5] w-full object-cover object-center"
+                      className="aspect-4/5 w-full object-cover object-center"
                     />
 
-                    <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/15 via-black/0 to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 h-28 bg-linear-to-t from-black/15 via-black/0 to-transparent" />
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
 
-            <div className="mt-10 flex items-center justify-between gap-4 rounded-[1.5rem] border border-black/8 bg-firela-blue-soft/20 px-5 py-4">
+            <motion.div
+              className="mt-10 flex items-center justify-between gap-4 rounded-3xl border border-black/8 bg-firela-blue-soft/20 px-5 py-4"
+              {...revealUp}
+            >
               <p className="text-sm leading-7 text-black/72">
                 {siteData.gallery.helperText}
               </p>
               <span className="hidden rounded-full bg-white px-4 py-2 text-[11px] uppercase tracking-[0.24em] text-black/55 sm:inline-flex">
                 Consulta directa
               </span>
-            </div>
+            </motion.div>
 
             <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
               {galleryItems.map((item, index) => (
-                <article
+                <motion.article
                   key={item.id}
-                  className="group overflow-hidden rounded-[1.75rem] border border-black/8 bg-white shadow-[0_12px_40px_rgba(0,0,0,0.04)] transition hover:-translate-y-1 hover:shadow-[0_18px_50px_rgba(0,0,0,0.07)]"
+                  className="group overflow-hidden rounded-[1.75rem] border border-black/8 bg-white shadow-[0_12px_40px_rgba(0,0,0,0.04)]"
+                  initial={{ opacity: 0, y: 22 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.15 }}
+                  transition={{
+                    duration: 0.45,
+                    delay: index * 0.05,
+                    ease: 'easeOut',
+                  }}
+                  whileHover={{ y: -6 }}
                 >
                   <button
                     type="button"
@@ -417,13 +497,15 @@ function App() {
                     aria-label={`Ver ${item.title} en grande`}
                     className="relative block w-full overflow-hidden text-left"
                   >
-                    <img
+                    <motion.img
                       src={item.image}
                       alt={item.title}
-                      className="aspect-[4/5] w-full object-cover object-center transition duration-500 group-hover:scale-[1.03]"
+                      className="aspect-4/5 w-full object-cover object-center"
+                      whileHover={{ scale: 1.03 }}
+                      transition={{ duration: 0.35, ease: 'easeOut' }}
                     />
 
-                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/12 via-black/0 to-transparent" />
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-black/12 via-black/0 to-transparent" />
 
                     <div className="absolute left-4 top-4 rounded-full border border-white/60 bg-white/85 px-3 py-2 text-[11px] uppercase tracking-[0.22em] text-black/60 backdrop-blur">
                       Ver en grande
@@ -461,15 +543,21 @@ function App() {
                       </a>
                     </div>
                   </div>
-                </article>
+                </motion.article>
               ))}
             </div>
           </div>
-        </section>
+        </motion.section>
 
-        <section className="border-t border-black/8 bg-firela-blue-soft/30">
+        <motion.section
+          className="border-t border-black/8 bg-firela-blue-soft/30"
+          {...revealUp}
+        >
           <div className="mx-auto max-w-7xl px-6 py-16 sm:px-10 lg:px-16 lg:py-24">
-            <div className="relative overflow-hidden rounded-[2rem] border border-black/8 bg-white p-8 shadow-[0_20px_70px_rgba(0,0,0,0.05)] sm:p-10 lg:p-12">
+            <motion.div
+              className="relative overflow-hidden rounded-4xl border border-black/8 bg-white p-8 shadow-[0_20px_70px_rgba(0,0,0,0.05)] sm:p-10 lg:p-12"
+              {...revealUpSlow}
+            >
               <div className="absolute -top-10 -left-6 h-28 w-28 rounded-full bg-firela-blue-soft blur-3xl" />
               <div className="absolute right-0 -bottom-10 h-32 w-32 rounded-full bg-firela-rose-soft/80 blur-3xl" />
 
@@ -504,14 +592,14 @@ function App() {
                   </a>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
-        </section>
+        </motion.section>
       </main>
 
       <footer id="contacto" className="border-t border-black/8 bg-white">
         <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 sm:px-10 lg:grid-cols-[1.1fr_0.9fr] lg:px-16">
-          <div className="space-y-4">
+          <motion.div className="space-y-4" {...revealUp}>
             <p className="text-sm uppercase tracking-[0.28em] text-firela-blue-deep">
               Contacto
             </p>
@@ -522,9 +610,12 @@ function App() {
               Si viste un estilo que te gustó o quieres cotizar un arreglo,
               podemos llevar la conversación directo a WhatsApp.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="rounded-[1.75rem] border border-black/8 bg-firela-rose-soft/45 p-6">
+          <motion.div
+            className="rounded-[1.75rem] border border-black/8 bg-firela-rose-soft/45 p-6"
+            {...revealUpSlow}
+          >
             <div className="space-y-4">
               <a
                 href={whatsappHref}
@@ -557,7 +648,7 @@ function App() {
                 Teléfono: {siteData.contact.phoneDisplay}
               </p>
             </div>
-          </div>
+          </motion.div>
         </div>
       </footer>
 
