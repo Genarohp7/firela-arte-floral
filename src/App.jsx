@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Lightbox from 'yet-another-react-lightbox'
 import firelaLogo from './assets/images/firela-logo.webp'
 import heroFirela from './assets/images/hero-firela.webp'
 import aboutFirela from './assets/images/about-firela.webp'
@@ -12,8 +13,18 @@ import galleryItem05 from './assets/images/gallery-item-05.webp'
 import galleryItem06 from './assets/images/gallery-item-06.webp'
 import siteData from './data/site'
 
+const galleryImageMap = {
+  'gallery-01': galleryItem01,
+  'gallery-02': galleryItem02,
+  'gallery-03': galleryItem03,
+  'gallery-04': galleryItem04,
+  'gallery-05': galleryItem05,
+  'gallery-06': galleryItem06,
+}
+
 function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [lightboxIndex, setLightboxIndex] = useState(-1)
 
   const createWhatsAppHref = (message) =>
     `https://wa.me/525548746673?text=${encodeURIComponent(message)}`
@@ -23,62 +34,16 @@ function App() {
   const closeMobileMenu = () => setIsMobileMenuOpen(false)
   const toggleMobileMenu = () => setIsMobileMenuOpen((current) => !current)
 
-  const galleryItems = [
-    {
-      id: 'gallery-01',
-      title: 'Diseño floral 01',
-      description:
-        'Una propuesta floral con presencia elegante para regalo o un momento especial.',
-      image: galleryItem01,
-      message:
-        'Hola, vi el Diseño floral 01 en la galería de FIRELA y me gustaría saber su precio y disponibilidad.',
-    },
-    {
-      id: 'gallery-02',
-      title: 'Diseño floral 02',
-      description:
-        'Composición con una imagen más delicada y una presentación cuidada.',
-      image: galleryItem02,
-      message:
-        'Hola, vi el Diseño floral 02 en la galería de FIRELA y me gustaría saber su precio y disponibilidad.',
-    },
-    {
-      id: 'gallery-03',
-      title: 'Diseño floral 03',
-      description:
-        'Arreglo con intención estética para sorprender con un detalle especial.',
-      image: galleryItem03,
-      message:
-        'Hola, vi el Diseño floral 03 en la galería de FIRELA y me gustaría saber su precio y disponibilidad.',
-    },
-    {
-      id: 'gallery-04',
-      title: 'Diseño floral 04',
-      description:
-        'Una pieza floral con mejor presencia visual para una ocasión importante.',
-      image: galleryItem04,
-      message:
-        'Hola, vi el Diseño floral 04 en la galería de FIRELA y me gustaría saber su precio y disponibilidad.',
-    },
-    {
-      id: 'gallery-05',
-      title: 'Diseño floral 05',
-      description:
-        'Detalle floral pensado para regalar con elegancia y sensibilidad.',
-      image: galleryItem05,
-      message:
-        'Hola, vi el Diseño floral 05 en la galería de FIRELA y me gustaría saber su precio y disponibilidad.',
-    },
-    {
-      id: 'gallery-06',
-      title: 'Diseño floral 06',
-      description:
-        'Propuesta floral con un estilo cuidado y una presentación fina.',
-      image: galleryItem06,
-      message:
-        'Hola, vi el Diseño floral 06 en la galería de FIRELA y me gustaría saber su precio y disponibilidad.',
-    },
-  ]
+  const galleryItems = siteData.gallery.items.map((item) => ({
+    ...item,
+    image: galleryImageMap[item.id],
+    message: `Hola, vi "${item.whatsappLabel}" en la galería de FIRELA y me gustaría conocer disponibilidad, personalización y costo.`,
+  }))
+
+  const lightboxSlides = galleryItems.map((item) => ({
+    src: item.image,
+    alt: item.title,
+  }))
 
   return (
     <div className="min-h-screen bg-firela-white text-firela-black">
@@ -431,34 +396,70 @@ function App() {
               </div>
             </div>
 
-            <div className="mt-12 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-              {galleryItems.map((item) => (
+            <div className="mt-10 flex items-center justify-between gap-4 rounded-[1.5rem] border border-black/8 bg-firela-blue-soft/20 px-5 py-4">
+              <p className="text-sm leading-7 text-black/72">
+                {siteData.gallery.helperText}
+              </p>
+              <span className="hidden rounded-full bg-white px-4 py-2 text-[11px] uppercase tracking-[0.24em] text-black/55 sm:inline-flex">
+                Consulta directa
+              </span>
+            </div>
+
+            <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+              {galleryItems.map((item, index) => (
                 <article
                   key={item.id}
-                  className="group overflow-hidden rounded-[1.75rem] border border-black/8 bg-white shadow-[0_12px_40px_rgba(0,0,0,0.04)]"
+                  className="group overflow-hidden rounded-[1.75rem] border border-black/8 bg-white shadow-[0_12px_40px_rgba(0,0,0,0.04)] transition hover:-translate-y-1 hover:shadow-[0_18px_50px_rgba(0,0,0,0.07)]"
                 >
-                  <div className="overflow-hidden">
+                  <button
+                    type="button"
+                    onClick={() => setLightboxIndex(index)}
+                    aria-label={`Ver ${item.title} en grande`}
+                    className="relative block w-full overflow-hidden text-left"
+                  >
                     <img
                       src={item.image}
                       alt={item.title}
                       className="aspect-[4/5] w-full object-cover object-center transition duration-500 group-hover:scale-[1.03]"
                     />
-                  </div>
+
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/12 via-black/0 to-transparent" />
+
+                    <div className="absolute left-4 top-4 rounded-full border border-white/60 bg-white/85 px-3 py-2 text-[11px] uppercase tracking-[0.22em] text-black/60 backdrop-blur">
+                      Ver en grande
+                    </div>
+                  </button>
 
                   <div className="space-y-3 p-5">
-                    <h3 className="text-xl font-medium">{item.title}</h3>
+                    <div className="flex items-center justify-between gap-3">
+                      <h3 className="text-xl font-medium">{item.title}</h3>
+                      <span className="rounded-full bg-firela-rose-soft/45 px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-black/55">
+                        FIRELA
+                      </span>
+                    </div>
+
                     <p className="text-sm leading-7 text-black/70">
                       {item.description}
                     </p>
 
-                    <a
-                      href={createWhatsAppHref(item.message)}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center rounded-full bg-firela-black px-4 py-2 text-sm font-medium text-firela-white transition hover:opacity-90"
-                    >
-                      Me interesa este diseño
-                    </a>
+                    <div className="flex flex-wrap gap-3">
+                      <button
+                        type="button"
+                        onClick={() => setLightboxIndex(index)}
+                        className="inline-flex items-center rounded-full border border-black/12 bg-white px-4 py-2 text-sm font-medium text-firela-black transition hover:bg-firela-rose-soft"
+                      >
+                        Ampliar foto
+                      </button>
+
+                      <a
+                        href={createWhatsAppHref(item.message)}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center rounded-full bg-firela-black px-4 py-2 text-sm font-medium text-firela-white transition hover:opacity-90"
+                      >
+                        Consultar este diseño
+                      </a>
+                    </div>
                   </div>
                 </article>
               ))}
@@ -559,6 +560,13 @@ function App() {
           </div>
         </div>
       </footer>
+
+      <Lightbox
+        open={lightboxIndex >= 0}
+        close={() => setLightboxIndex(-1)}
+        index={lightboxIndex >= 0 ? lightboxIndex : 0}
+        slides={lightboxSlides}
+      />
     </div>
   )
 }

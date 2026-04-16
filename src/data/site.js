@@ -94,10 +94,56 @@ const siteData = {
 
   gallery: {
     title: 'Galería',
-    heading: 'Un catálogo visual con mejor presencia y contacto directo.',
+    heading: 'Diseños florales con estilo, presencia y consulta directa.',
     description:
-      'Cada diseño que ves aquí puede convertirse en una idea, una cotización o un pedido. La intención es que puedas identificar el estilo que te gusta y preguntarnos directamente por él.',
-    buttonLabel: 'Pedir información general',
+      'Aquí puedes explorar algunos estilos y propuestas florales de FIRELA. Si alguno te gusta, puedes escribirnos directamente por WhatsApp para conocer disponibilidad, personalización y opciones de entrega.',
+    buttonLabel: 'Solicitar información general',
+    helperText:
+      'Si viste un diseño que te gustó, solo selecciónalo y pregúntanos por él.',
+    items: [
+      {
+        id: 'gallery-01',
+        title: 'Diseño floral elegante',
+        description:
+          'Una propuesta con presencia visual y una composición pensada para destacar desde el primer vistazo.',
+        whatsappLabel: 'Diseño floral elegante',
+      },
+      {
+        id: 'gallery-02',
+        title: 'Detalle floral delicado',
+        description:
+          'Una opción con una imagen más sutil, ideal para regalar con intención y buena presentación.',
+        whatsappLabel: 'Detalle floral delicado',
+      },
+      {
+        id: 'gallery-03',
+        title: 'Arreglo con intención especial',
+        description:
+          'Diseño floral pensado para momentos que merecen sentirse más personales y memorables.',
+        whatsappLabel: 'Arreglo con intención especial',
+      },
+      {
+        id: 'gallery-04',
+        title: 'Composición floral protagonista',
+        description:
+          'Una propuesta con más carácter visual para ocasiones donde el arreglo debe hacerse notar.',
+        whatsappLabel: 'Composición floral protagonista',
+      },
+      {
+        id: 'gallery-05',
+        title: 'Detalle floral para regalar',
+        description:
+          'Una pieza elegante para sorprender con flores bien presentadas y bien pensadas.',
+        whatsappLabel: 'Detalle floral para regalar',
+      },
+      {
+        id: 'gallery-06',
+        title: 'Diseño floral de presencia suave',
+        description:
+          'Una propuesta con equilibrio visual y una estética cuidada para distintos momentos.',
+        whatsappLabel: 'Diseño floral de presencia suave',
+      },
+    ],
   },
 
   finalCta: {
