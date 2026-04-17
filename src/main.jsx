@@ -1,8 +1,9 @@
-import { StrictMode } from 'react'
+import React, { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import '@fontsource-variable/inter'
 import '@fontsource-variable/eb-garamond'
 import 'yet-another-react-lightbox/styles.css'
+import 'lenis/dist/lenis.css'
 import './index.css'
 import App from './App.jsx'
 
