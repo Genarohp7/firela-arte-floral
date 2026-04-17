@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://genarohp7.github.io/firela-arte-floral/sitemap.xml
+Sitemap: https://firela.com.mx/sitemap.xml
